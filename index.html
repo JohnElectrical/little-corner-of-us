@@ -25,7 +25,7 @@ nav a:hover:after,nav a.on:after{width:60%}nav a.on{background:var(--b)}
 @keyframes bob{50%{transform:translateY(-14px)}}
 main,footer,nav{position:relative;z-index:1}
 #hero{text-align:center;min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
-.photo{width:min(260px,70vw);aspect-ratio:1;border-radius:50% 50% 46% 46%;border:8px solid var(--w);box-shadow:var(--sh);object-fit:cover;transform:rotate(-3deg)}
+.photo{width:min(260px,70vw);aspect-ratio:1;border-radius:50%;border:8px solid var(--w);box-shadow:var(--sh);object-fit:cover;transform:rotate(-3deg)}
 .mas{columns:3 200px;gap:14px}.mas figure{margin:0 0 14px;break-inside:avoid;background:var(--w);padding:8px 8px 12px;border-radius:14px;box-shadow:var(--sh);cursor:pointer;transition:.3s}
 .mas figure:hover{transform:rotate(-1deg) scale(1.02)}.mas img{width:100%;border-radius:10px;display:block}
 figcaption{font-size:.85rem;padding-top:6px}figcaption small{display:block;opacity:.7}
@@ -93,7 +93,7 @@ function toast(t){tt.textContent=t;tt.classList.add('on');setTimeout(()=>tt.clas
 function hearts(n=14){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;for(let i=0;i<n;i++){const h=document.createElement('span');h.className='fl';h.textContent=['♡','♥','✦','✿'][i%4];h.style.cssText=`left:${Math.random()*100}%;font-size:${14+Math.random()*22}px;animation-duration:${5+Math.random()*5}s;animation-delay:${Math.random()*1.5}s`;bg.appendChild(h);setTimeout(()=>h.remove(),11000)}}
 function R(){const H=D.home;app.innerHTML=`
 <section id="home"><div id="hero"><span class="dec" data-p=".3" style="left:8%;top:18%">☁</span><span class="dec" data-p=".5" style="right:10%;top:30%">✦</span><span class="dec" data-p=".2" style="left:14%;bottom:18%">✿</span>
-<img class="photo" src="${D.photos[0]?.img||ph(1)}" alt=""><h1>${esc(H.title)}</h1><p style="max-width:520px">${esc(H.text)}</p><button class="btn" onclick="go('memories')">Explore Our Memories</button></div></section>
+<img class="photo" src="${H.hero||ph(1)}" alt=""><h1>${esc(H.title)}</h1><p style="max-width:520px">${esc(H.text)}</p><button class="btn" onclick="go('memories')">Explore Our Memories</button></div></section>
 <section id="memories"><h2 class="rv">Our Little Memories</h2><div class="mas">${D.photos.map((p,i)=>`<figure class="rv" onclick="lb(${i})"><img loading="lazy" src="${p.img||ph(i)}" alt="${esc(p.cap)}"><figcaption>${esc(p.cap)}<small>${mo(p.date)}</small></figcaption></figure>`).join('')}</div></section>
 <section id="letter"><h2 class="rv">Something I Want You to Know</h2><div class="paper rv" style="max-width:560px;margin:20px auto"><div style="font-size:3rem">✉</div><div id="lt" class="lt"></div><button class="btn" id="rl" onclick="readL()">Read My Letter</button></div></section>
 <section id="reasons"><h2 class="rv">Little Things I Love About You</h2><div class="grid" style="margin-top:20px">${D.reasons.map(r=>`<div class="flip rv" onclick="this.classList.toggle('on')"><div class="fi"><div class="fr">${esc(r.title)}</div><div class="bk">${esc(r.text)}</div></div></div>`).join('')}</div></section>
@@ -127,7 +127,7 @@ function A(){const T=['Overview','Homepage','Photos','Love Letter','Reasons','Ti
 $('tabs').innerHTML=T.map(t=>`<button class="${t===tab?'on':''}" onclick="tab='${t}';A()">${t}</button>`).join('')+`<button onclick="save()">💾 Save all</button><button onclick="logout();go('home')">Preview site</button><button onclick="logout()">Log out</button>`;
 let h=`<h2 style="text-align:left">${tab}</h2>`;
 if(tab=='Overview')h+=`<div class="card">Photos: ${D.photos.length} · Reasons: ${D.reasons.length} · Timeline: ${D.timeline.length} · Songs: ${D.playlist.length} · Dates: ${D.dates.length}<br><br><b>Prototype notice:</b> content lives in this browser only (localStorage) and the password check runs in the page, so it is NOT secure and visitors on other devices will not see your edits. See the production notes for the real backend.</div>`;
-else if(tab=='Homepage')h+=HF.map(([f,l])=>`<div class="row card"><label>${l}</label><textarea rows="2" oninput="D.home.${f}=this.value">${esc(D.home[f])}</textarea></div>`).join('');
+else if(tab=='Homepage')h+=`<div class="row card"><label>Hero photo (the circle)</label><img src="${D.home.hero||ph(1)}" alt="" style="width:120px;height:120px;border-radius:50%"><input type="file" accept="image/*" onchange="fin(this,d=>{D.home.hero=d;A()})"><button class="btn dg" onclick="D.home.hero='';A()">Remove photo</button></div>`+HF.map(([f,l])=>`<div class="row card"><label>${l}</label><textarea rows="2" oninput="D.home.${f}=this.value">${esc(D.home[f])}</textarea></div>`).join('');
 else if(tab=='Love Letter')h+=`<div class="card"><textarea rows="14" oninput="D.letter=this.value">${esc(D.letter)}</textarea></div>`;
 else if(tab=='Settings')h+=`<div class="card"><label>New password</label><input id="np" type="password"><button class="btn" onclick="if(np.value.length>3){D.pw=np.value;save()}else toast('Too short')">Change password</button> <button class="btn dg" onclick="if(confirm('Reset all content?')){D=structuredClone(def);save();A()}">Reset content</button></div>`;
 else{const[k,fs,im]=SC[tab];if(k=='photos')h+=`<div class="card row"><label>Upload multiple photos</label><input type="file" accept="image/*" multiple onchange="addP(this)"></div>`;
