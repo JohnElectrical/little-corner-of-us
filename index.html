@@ -64,13 +64,13 @@ nav{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;gap:2px;padding:
 .grid{grid-template-columns:repeat(2,1fr);gap:10px}.flip{height:190px}.fr{font-size:1.15rem}.bk{font-size:.85rem;padding:10px}.cal{flex-direction:column;align-items:flex-start;gap:8px}.cal b{min-width:0}
 .pl a{flex-direction:column;gap:0;padding:10px 4px}.paper{padding:22px 16px}.lt p{font-size:.95rem}
 .tl{padding-left:20px;margin-left:8px}.tl .card{padding:14px}.tl .card:before{left:-33px}
-#ov{justify-content:flex-start;padding-top:40px;overflow:auto}#ov h1{font-size:1.9rem}
+#ov{justify-content:center;overflow:auto}
 .adm.on{flex-direction:column}.side{width:100%;flex-direction:row;overflow-x:auto;padding:8px;position:sticky;top:0;z-index:2}.side h3{display:none}.side button{white-space:nowrap;padding:10px 12px}.cont{padding:14px;width:100%}.cont .btn{width:100%;margin:4px 0}
 .m .card{max-width:100%}}
 body.ed [data-e]{outline:2px dashed var(--b);outline-offset:3px;cursor:text}#bar{position:fixed;right:10px;top:70px;z-index:130;display:none;flex-direction:column;gap:6px}
 @media(prefers-reduced-motion:reduce){*,*:before{animation:none!important;transition:none!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
 </style></head><body>
-<div id="ov"><h1 id="ovT"></h1><p id="ovS"></p>
+<div id="ov"><h1 id="ovT" style="display:none"></h1><p id="ovS" style="display:none"></p>
 <div class="env" id="env"><i>♡</i></div><button class="btn" id="ob">Open Your Little Surprise</button><div id="wm" class="card"></div></div>
 <div id="bg"></div><div id="lb" onclick="this.classList.remove('on')"><img id="li"><p id="lc"></p></div><div id="tt"></div>
 <div class="m" id="lg"><div class="card" style="max-width:320px;width:100%"><h3>♡</h3><input type="password" id="pw" placeholder="Password"><button class="btn" onclick="login()">Enter</button> <button class="btn w" onclick="lg.classList.remove('on')">Close</button></div></div>
@@ -94,9 +94,9 @@ const CFG={url:'https://sagkarcbdrotcwxddvcx.supabase.co',key:'sb_publishable_Bm
 const SB=()=>CFG.url&&CFG.key;let TOK=null;
 const SRC='<!DOCTYPE html>\n'+document.documentElement.outerHTML;let D;try{const s=document.getElementById('st').textContent.trim();if(s)D=JSON.parse(s)}catch(e){}try{const L=JSON.parse(localStorage.getItem(K));if(L&&(!D||(L.ts||0)>(D.ts||0)))D=L}catch(e){}D=D||structuredClone(def);
 const mo=d=>{const x=new Date(d+'T00:00');return isNaN(x)?d:x.toLocaleDateString('en',{month:'short',day:'numeric',year:'numeric'})};
-const TX=[['ovT','Opening: heading','Welcome to My Little Corner of Us ♡'],['ovS','Opening: subtitle','A little place filled with pieces of us.'],['ovB','Opening: button','Open Your Little Surprise'],['n0','Menu 1','Home'],['n1','Menu 2','Memories'],['n2','Menu 3','Letter'],['n3','Menu 4','Reasons'],['n4','Menu 5','Timeline'],['n5','Menu 6','Surprise'],['hBtn','Hero button','Explore Our Memories'],['mT','Gallery heading','Our Little Memories'],['lT','Letter heading','Something I Want You to Know'],['lB','Letter button','Read My Letter'],['rT','Reasons heading','Little Things I Love About You'],['tT','Timeline heading','Our Special Moments'],['sT','Surprise heading','Can I Ask You Something?'],['sQ','Surprise question','Do you know how special you are to me?'],['sB1','Surprise button 1','Tell Me!'],['sB2','Surprise button 2','Send a Little Hug ♡'],['pT','Playlist heading','Our Playlist'],['cT','Calendar heading','Our Little Calendar'],['eB','Final button','Read This Again ♡'],['fT','Footer text','LITTLE CORNER OF US ♡']];
+const TX=[['ovB','Opening: button','Open Your Little Surprise'],['n0','Menu 1','Home'],['n1','Menu 2','Memories'],['n2','Menu 3','Letter'],['n3','Menu 4','Reasons'],['n4','Menu 5','Timeline'],['n5','Menu 6','Surprise'],['hBtn','Hero button','Explore Our Memories'],['mT','Gallery heading','Our Little Memories'],['lT','Letter heading','Something I Want You to Know'],['lB','Letter button','Read My Letter'],['rT','Reasons heading','Little Things I Love About You'],['tT','Timeline heading','Our Special Moments'],['sT','Surprise heading','Can I Ask You Something?'],['sQ','Surprise question','Do you know how special you are to me?'],['sB1','Surprise button 1','Tell Me!'],['sB2','Surprise button 2','Send a Little Hug ♡'],['pT','Playlist heading','Our Playlist'],['cT','Calendar heading','Our Little Calendar'],['eB','Final button','Read This Again ♡'],['fT','Footer text','LITTLE CORNER OF US ♡']];
 const T0=k=>(D.t&&D.t[k])||TX.find(x=>x[0]==k)[2],T=k=>esc(T0(k));
-function txt(){const o=$('ovT');if(o){o.textContent=T0('ovT');$('ovS').textContent=T0('ovS');$('ob').textContent=T0('ovB')}document.querySelectorAll('#nav a').forEach((a,i)=>a.textContent=T0('n'+i));$('ft').textContent=T0('fT');mark()}
+function txt(){const o=$('ovT');if(o){$('ob').textContent=T0('ovB')}document.querySelectorAll('#nav a').forEach((a,i)=>a.textContent=T0('n'+i));$('ft').textContent=T0('fT');mark()}
 function toast(t){tt.textContent=t;tt.classList.add('on');setTimeout(()=>tt.classList.remove('on'),2200)}
 function hearts(n=14){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;for(let i=0;i<n;i++){const h=document.createElement('span');h.className='fl';h.textContent=['♡','♥','✦','✿'][i%4];h.style.cssText=`left:${Math.random()*100}%;font-size:${14+Math.random()*22}px;animation-duration:${5+Math.random()*5}s;animation-delay:${Math.random()*1.5}s`;bg.appendChild(h);setTimeout(()=>h.remove(),11000)}}
 function R(){const H=D.home;app.innerHTML=`
