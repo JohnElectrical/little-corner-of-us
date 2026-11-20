@@ -88,7 +88,7 @@ reasons:[['Ordinary days','The way you make ordinary days feel special.'],['Litt
 timeline:[['2024-01-01','Our first conversation','I did not know then how much I would look forward to talking to you.'],['2024-02-14','The day we became closer','Write what happened here.'],['2024-06-01','My favorite memory with you','Write your favorite memory here.'],['2024-09-01','Little moments I never want to forget','The small things count the most.'],['2025-01-01','More memories to come','There is so much more I want to do with you.']].map(([date,title,text])=>({date,title,text,img:''})),
 playlist:[{title:'Our Song',artist:'Artist Name',url:'https://music.youtube.com'},{title:'Song You Love',artist:'Artist Name',url:'https://open.spotify.com'}],
 dates:[{date:'2024-01-01',title:'First conversation'},{date:'2024-02-14',title:'The day we got closer'},{date:'2025-01-01',title:'Anniversary'}]};
-const CFG={url:'',key:'',email:''};
+const CFG={url:'https://sagkarcbdrotcwxddvcx.supabase.co/rest/v1/',key:'sb_publishable_Bm6GG7tYpl42Qk6TSGRJLw_jFWN_aLp',email:'jsean4352@gmail.com'};
 const SB=()=>CFG.url&&CFG.key;let TOK=null;
 const SRC='<!DOCTYPE html>\n'+document.documentElement.outerHTML;let D;try{const s=document.getElementById('st').textContent.trim();if(s)D=JSON.parse(s)}catch(e){}try{const L=JSON.parse(localStorage.getItem(K));if(L&&(!D||(L.ts||0)>(D.ts||0)))D=L}catch(e){}D=D||structuredClone(def);
 const mo=d=>{const x=new Date(d+'T00:00');return isNaN(x)?d:x.toLocaleDateString('en',{month:'short',day:'numeric',year:'numeric'})};
