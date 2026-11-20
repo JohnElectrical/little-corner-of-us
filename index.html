@@ -67,6 +67,7 @@ nav{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;gap:2px;padding:
 #ov{justify-content:flex-start;padding-top:40px;overflow:auto}#ov h1{font-size:1.9rem}
 .adm.on{flex-direction:column}.side{width:100%;flex-direction:row;overflow-x:auto;padding:8px;position:sticky;top:0;z-index:2}.side h3{display:none}.side button{white-space:nowrap;padding:10px 12px}.cont{padding:14px;width:100%}.cont .btn{width:100%;margin:4px 0}
 .m .card{max-width:100%}}
+body.ed [data-e]{outline:2px dashed var(--b);outline-offset:3px;cursor:text}#bar{position:fixed;right:10px;top:70px;z-index:130;display:none;flex-direction:column;gap:6px}
 @media(prefers-reduced-motion:reduce){*,*:before{animation:none!important;transition:none!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
 </style></head><body>
 <div id="ov"><h1 id="ovT"></h1><p id="ovS"></p>
@@ -75,6 +76,7 @@ nav{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;gap:2px;padding:
 <div class="m" id="lg"><div class="card" style="max-width:320px;width:100%"><h3>♡</h3><input type="password" id="pw" placeholder="Password"><button class="btn" onclick="login()">Enter</button> <button class="btn w" onclick="lg.classList.remove('on')">Close</button></div></div>
 <div class="adm" id="adm"><div class="side"><h3>Our Corner ♡</h3><div id="tabs" style="display:contents"></div></div><div class="cont" id="ac"></div></div>
 <nav id="nav"><a href="#home">Home</a><a href="#memories">Memories</a><a href="#letter">Letter</a><a href="#reasons">Reasons</a><a href="#timeline">Timeline</a><a href="#surprise">Surprise</a></nav>
+<div id="bar"><button class="btn" onclick="tog()">✎ Edit text</button><button class="btn" onclick="save()">💾 Save</button><button class="btn w" onclick="back()">⬅ Admin</button></div>
 <main id="app"></main>
 <footer><span id="ft"></span><br><button id="sec" aria-label="♡" onclick="lg.classList.add('on')">♡</button></footer>
 <script id="st" type="application/json"></script>
@@ -94,7 +96,7 @@ const SRC='<!DOCTYPE html>\n'+document.documentElement.outerHTML;let D;try{const
 const mo=d=>{const x=new Date(d+'T00:00');return isNaN(x)?d:x.toLocaleDateString('en',{month:'short',day:'numeric',year:'numeric'})};
 const TX=[['ovT','Opening: heading','Welcome to My Little Corner of Us ♡'],['ovS','Opening: subtitle','A little place filled with pieces of us.'],['ovB','Opening: button','Open Your Little Surprise'],['n0','Menu 1','Home'],['n1','Menu 2','Memories'],['n2','Menu 3','Letter'],['n3','Menu 4','Reasons'],['n4','Menu 5','Timeline'],['n5','Menu 6','Surprise'],['hBtn','Hero button','Explore Our Memories'],['mT','Gallery heading','Our Little Memories'],['lT','Letter heading','Something I Want You to Know'],['lB','Letter button','Read My Letter'],['rT','Reasons heading','Little Things I Love About You'],['tT','Timeline heading','Our Special Moments'],['sT','Surprise heading','Can I Ask You Something?'],['sQ','Surprise question','Do you know how special you are to me?'],['sB1','Surprise button 1','Tell Me!'],['sB2','Surprise button 2','Send a Little Hug ♡'],['pT','Playlist heading','Our Playlist'],['cT','Calendar heading','Our Little Calendar'],['eB','Final button','Read This Again ♡'],['fT','Footer text','LITTLE CORNER OF US ♡']];
 const T0=k=>(D.t&&D.t[k])||TX.find(x=>x[0]==k)[2],T=k=>esc(T0(k));
-function txt(){const o=$('ovT');if(o){o.textContent=T0('ovT');$('ovS').textContent=T0('ovS');$('ob').textContent=T0('ovB')}document.querySelectorAll('#nav a').forEach((a,i)=>a.textContent=T0('n'+i));$('ft').textContent=T0('fT')}
+function txt(){const o=$('ovT');if(o){o.textContent=T0('ovT');$('ovS').textContent=T0('ovS');$('ob').textContent=T0('ovB')}document.querySelectorAll('#nav a').forEach((a,i)=>a.textContent=T0('n'+i));$('ft').textContent=T0('fT');mark()}
 function toast(t){tt.textContent=t;tt.classList.add('on');setTimeout(()=>tt.classList.remove('on'),2200)}
 function hearts(n=14){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;for(let i=0;i<n;i++){const h=document.createElement('span');h.className='fl';h.textContent=['♡','♥','✦','✿'][i%4];h.style.cssText=`left:${Math.random()*100}%;font-size:${14+Math.random()*22}px;animation-duration:${5+Math.random()*5}s;animation-delay:${Math.random()*1.5}s`;bg.appendChild(h);setTimeout(()=>h.remove(),11000)}}
 function R(){const H=D.home;app.innerHTML=`
@@ -119,9 +121,15 @@ setInterval(()=>hearts(1),2500);
 /* ---- ADMIN (frontend-only prototype: NOT secure) ---- */
 let ok=false,tab='Overview';
 async function login(){const p=$('pw').value;if(SB()){try{const r=await fetch(CFG.url+'/auth/v1/token?grant_type=password',{method:'POST',headers:{apikey:CFG.key,'Content-Type':'application/json'},body:JSON.stringify({email:CFG.email,password:p})});const j=await r.json();if(!j.access_token)return toast('Wrong password');TOK=j.access_token}catch(e){return toast('Cannot reach server')}}else if(p!==D.pw)return toast('Wrong password');ok=true;lg.classList.remove('on');$('pw').value='';adm.classList.add('on');A()}
-function logout(){ok=false;adm.classList.remove('on')}
+const MK=[['#hero h1','h:title'],['#hero p','h:text'],['#hero .btn','t:hBtn'],['#memories h2','t:mT'],['#letter h2','t:lT'],['#letter .btn','t:lB'],['#reasons h2','t:rT'],['#timeline h2','t:tT'],['#surprise h2','t:sT'],['#surprise p','t:sQ'],['#surprise .btn','t:sB1',0],['#surprise .btn','t:sB2',1],['#playlist h2','t:pT'],['#dates h2','t:cT'],['#end h2','h:endT'],['#end p','h:endS'],['#end .btn','t:eB'],['#ft','t:fT']];
+function mark(){const on=document.body.classList.contains('ed');MK.forEach(([s,k,i])=>{const e=document.querySelectorAll(s)[i||0];if(!e)return;e.dataset.e=k;e.contentEditable=on;e.oninput=()=>{const[t,n]=k.split(':');if(t=='h')D.home[n]=e.textContent;else(D.t=D.t||{})[n]=e.textContent}})}
+function tog(){document.body.classList.toggle('ed');mark();toast(document.body.classList.contains('ed')?'Tap any dashed text to edit it. Press Save when done.':'Edit mode off')}
+function prev(){adm.classList.remove('on');bar.style.display='flex';go('home')}
+function back(){bar.style.display='none';document.body.classList.remove('ed');mark();adm.classList.add('on');A()}
+document.addEventListener('click',e=>{if(document.body.classList.contains('ed')&&e.target.closest('[data-e]')){e.preventDefault();e.stopPropagation()}},true);
+function logout(){ok=false;adm.classList.remove('on');bar.style.display='none';document.body.classList.remove('ed');mark()}
 async function save(){D.ts=Date.now();try{localStorage.setItem(K,JSON.stringify(D))}catch(e){toast('Storage full on this device, continuing...')}
-if(SB()&&TOK){try{const r=await fetch(CFG.url+'/rest/v1/site?id=eq.1',{method:'PATCH',headers:{apikey:CFG.key,Authorization:'Bearer '+TOK,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({data:D})});if(!r.ok)throw 0;toast('Saved for everyone ♡')}catch(e){toast('Could not save online. Log in again.')}R();return}
+if(SB()&&TOK){try{const r=await fetch(CFG.url+'/rest/v1/site?id=eq.1',{method:'PATCH',headers:{apikey:CFG.key,Authorization:'Bearer '+TOK,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({data:D})});if(!r.ok)throw (r.status+' '+(await r.text()).slice(0,140));toast('Saved for everyone ♡')}catch(e){toast('Could not save online: '+e)}R();return}
 const j=JSON.stringify(D).replace(/</g,'\\u003c');const html=SRC.replace(/(<script id="st" type="application\/json">)[\s\S]*?(<\/script>)/,(m,a,b)=>a+j+b);
 try{const a=window.claude&&await claude.use('artifact');if(!a){const bl=new Blob([html],{type:'text/html'}),l=document.createElement('a');l.href=URL.createObjectURL(bl);l.download='index.html';document.body.appendChild(l);l.click();l.remove();toast('Downloaded index.html. Upload it to GitHub to update the site for everyone.');R();return}
 toast('Publishing for everyone...');await a.publish(html)}catch(e){toast('Could not publish: '+((e&&e.code)||'error'));R()}}
@@ -134,7 +142,7 @@ function addP(el){[...el.files].forEach(f=>fin({files:[f]},d=>{D.photos.push({ca
 function add(k){const b={photos:{cap:'',date:'',img:''},reasons:{title:'',text:''},timeline:{date:'',title:'',text:'',img:''},playlist:{title:'',artist:'',url:''},dates:{date:'',title:''}}[k];D[k].push(b);A()}
 function del(k,i){if(confirm('Delete this item?')){D[k].splice(i,1);A()}}
 function A(){const T=['Overview','Homepage','Photos','Love Letter','Reasons','Timeline','Playlist','Special Dates','Settings'];
-$('tabs').innerHTML=T.map(t=>`<button class="${t===tab?'on':''}" onclick="tab='${t}';A()">${t}</button>`).join('')+`<button onclick="save()">💾 Save all</button><button onclick="logout();go('home')">Preview site</button><button onclick="logout()">Log out</button>`;
+$('tabs').innerHTML=T.map(t=>`<button class="${t===tab?'on':''}" onclick="tab='${t}';A()">${t}</button>`).join('')+`<button onclick="save()">💾 Save all</button><button onclick="prev()">✎ Edit text on page</button><button onclick="logout()">Log out</button>`;
 let h=`<h2 style="text-align:left">${tab}</h2>`;
 if(tab=='Overview')h+=`<div class="card">Photos: ${D.photos.length} · Reasons: ${D.reasons.length} · Timeline: ${D.timeline.length} · Songs: ${D.playlist.length} · Dates: ${D.dates.length}<br><br><b>How saving works:</b> "Save all changes" publishes your edits so everyone with the link sees them (the page reloads after publishing). Only the page owner signed in to claude.ai can publish. The password just hides the editor.</div>`;
 else if(tab=='Homepage')h+=`<div class="row card"><label>Hero photo (the circle)</label><img src="${D.home.hero||ph(1)}" alt="" style="width:120px;height:120px;border-radius:50%"><input type="file" accept="image/*" onchange="fin(this,d=>{D.home.hero=d;A()})"><button class="btn dg" onclick="D.home.hero='';A()">Remove photo</button></div>`+HF.map(([f,l])=>`<div class="row card"><label>${l}</label><textarea rows="2" oninput="D.home.${f}=this.value">${esc(D.home[f])}</textarea></div>`).join('')+`<h3>Other website text</h3>`+TX.map(([k,l,d])=>`<div class="row card"><label>${l}</label><input value="${esc(D.t&&D.t[k]!=null?D.t[k]:d)}" oninput="(D.t=D.t||{})['${k}']=this.value"></div>`).join('');
