@@ -88,7 +88,9 @@ reasons:[['Ordinary days','The way you make ordinary days feel special.'],['Litt
 timeline:[['2024-01-01','Our first conversation','I did not know then how much I would look forward to talking to you.'],['2024-02-14','The day we became closer','Write what happened here.'],['2024-06-01','My favorite memory with you','Write your favorite memory here.'],['2024-09-01','Little moments I never want to forget','The small things count the most.'],['2025-01-01','More memories to come','There is so much more I want to do with you.']].map(([date,title,text])=>({date,title,text,img:''})),
 playlist:[{title:'Our Song',artist:'Artist Name',url:'https://music.youtube.com'},{title:'Song You Love',artist:'Artist Name',url:'https://open.spotify.com'}],
 dates:[{date:'2024-01-01',title:'First conversation'},{date:'2024-02-14',title:'The day we got closer'},{date:'2025-01-01',title:'Anniversary'}]};
-const SRC='<!DOCTYPE html>\n'+document.documentElement.outerHTML;let D;try{const s=document.getElementById('st').textContent.trim();if(s)D=JSON.parse(s)}catch(e){}if(!D)try{D=JSON.parse(localStorage.getItem(K))}catch(e){}D=D||structuredClone(def);
+const CFG={url:'',key:'',email:''};
+const SB=()=>CFG.url&&CFG.key;let TOK=null;
+const SRC='<!DOCTYPE html>\n'+document.documentElement.outerHTML;let D;try{const s=document.getElementById('st').textContent.trim();if(s)D=JSON.parse(s)}catch(e){}try{const L=JSON.parse(localStorage.getItem(K));if(L&&(!D||(L.ts||0)>(D.ts||0)))D=L}catch(e){}D=D||structuredClone(def);
 const mo=d=>{const x=new Date(d+'T00:00');return isNaN(x)?d:x.toLocaleDateString('en',{month:'short',day:'numeric',year:'numeric'})};
 const TX=[['ovT','Opening: heading','Welcome to My Little Corner of Us ♡'],['ovS','Opening: subtitle','A little place filled with pieces of us.'],['ovB','Opening: button','Open Your Little Surprise'],['n0','Menu 1','Home'],['n1','Menu 2','Memories'],['n2','Menu 3','Letter'],['n3','Menu 4','Reasons'],['n4','Menu 5','Timeline'],['n5','Menu 6','Surprise'],['hBtn','Hero button','Explore Our Memories'],['mT','Gallery heading','Our Little Memories'],['lT','Letter heading','Something I Want You to Know'],['lB','Letter button','Read My Letter'],['rT','Reasons heading','Little Things I Love About You'],['tT','Timeline heading','Our Special Moments'],['sT','Surprise heading','Can I Ask You Something?'],['sQ','Surprise question','Do you know how special you are to me?'],['sB1','Surprise button 1','Tell Me!'],['sB2','Surprise button 2','Send a Little Hug ♡'],['pT','Playlist heading','Our Playlist'],['cT','Calendar heading','Our Little Calendar'],['eB','Final button','Read This Again ♡'],['fT','Footer text','LITTLE CORNER OF US ♡']];
 const T0=k=>(D.t&&D.t[k])||TX.find(x=>x[0]==k)[2],T=k=>esc(T0(k));
@@ -116,9 +118,10 @@ $('ob').onclick=()=>{$('env').classList.add('open');$('ob').style.display='none'
 setInterval(()=>hearts(1),2500);
 /* ---- ADMIN (frontend-only prototype: NOT secure) ---- */
 let ok=false,tab='Overview';
-function login(){if($('pw').value===D.pw){ok=true;lg.classList.remove('on');$('pw').value='';adm.classList.add('on');A()}else toast('Wrong password')}
+async function login(){const p=$('pw').value;if(SB()){try{const r=await fetch(CFG.url+'/auth/v1/token?grant_type=password',{method:'POST',headers:{apikey:CFG.key,'Content-Type':'application/json'},body:JSON.stringify({email:CFG.email,password:p})});const j=await r.json();if(!j.access_token)return toast('Wrong password');TOK=j.access_token}catch(e){return toast('Cannot reach server')}}else if(p!==D.pw)return toast('Wrong password');ok=true;lg.classList.remove('on');$('pw').value='';adm.classList.add('on');A()}
 function logout(){ok=false;adm.classList.remove('on')}
-async function save(){try{localStorage.setItem(K,JSON.stringify(D))}catch(e){}
+async function save(){D.ts=Date.now();try{localStorage.setItem(K,JSON.stringify(D))}catch(e){toast('Storage full on this device, continuing...')}
+if(SB()&&TOK){try{const r=await fetch(CFG.url+'/rest/v1/site?id=eq.1',{method:'PATCH',headers:{apikey:CFG.key,Authorization:'Bearer '+TOK,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({data:D})});if(!r.ok)throw 0;toast('Saved for everyone ♡')}catch(e){toast('Could not save online. Log in again.')}R();return}
 const j=JSON.stringify(D).replace(/</g,'\\u003c');const html=SRC.replace(/(<script id="st" type="application\/json">)[\s\S]*?(<\/script>)/,(m,a,b)=>a+j+b);
 try{const a=window.claude&&await claude.use('artifact');if(!a){const bl=new Blob([html],{type:'text/html'}),l=document.createElement('a');l.href=URL.createObjectURL(bl);l.download='index.html';document.body.appendChild(l);l.click();l.remove();toast('Downloaded index.html. Upload it to GitHub to update the site for everyone.');R();return}
 toast('Publishing for everyone...');await a.publish(html)}catch(e){toast('Could not publish: '+((e&&e.code)||'error'));R()}}
@@ -141,4 +144,5 @@ else{const[k,fs,im]=SC[tab];if(k=='photos')h+=`<div class="card row"><label>Uplo
 h+=D[k].map((x,i)=>`<div class="card row">${im?`<img src="${x.img||ph(i)}" alt=""><input type="file" accept="image/*" onchange="up(this,'${k}',${i})">`:''}${fs.map(f=>`<label>${f}</label>${f=='text'?`<textarea rows=3 oninput="S('${k}',${i},'${f}',this.value)">${esc(x[f])}</textarea>`:`<input ${f=='date'?'type=date':''} value="${esc(x[f])}" oninput="S('${k}',${i},'${f}',this.value)">`}`).join('')}<button class="btn dg" onclick="del('${k}',${i})">Delete</button></div>`).join('')+(k!='photos'?`<button class="btn" onclick="add('${k}')">+ Add</button>`:'')}
 $('ac').innerHTML=h+`<p><button class="btn" onclick="save()">💾 Save all changes</button></p>`}
 R();
+if(SB())fetch(CFG.url+'/rest/v1/site?id=eq.1&select=data',{headers:{apikey:CFG.key}}).then(r=>r.json()).then(r=>{const d=r&&r[0]&&r[0].data;if(d&&d.home&&!adm.classList.contains('on')){D=d;R()}}).catch(()=>{});
 </script></body></html>
