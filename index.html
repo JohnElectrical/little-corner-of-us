@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LITTLE CORNER OF US ♡</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--b:#B8D8EA;--g:#C5DFC9;--w:#FFFFFF;--s:#DDE1E5;--t:#3F6B86;--sh:0 6px 20px rgba(63,107,134,.12);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;font-family:Nunito,system-ui,sans-serif;color:var(--t);background:linear-gradient(180deg,var(--w),var(--b) 40%,var(--g) 70%,var(--w));background-attachment:fixed;overflow-x:hidden;line-height:1.6}
+h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;margin:0 0 .5rem}
+h1{font-size:clamp(2rem,7vw,3.6rem)}h2{font-size:clamp(1.6rem,5vw,2.4rem);text-align:center}
+section{padding:70px 20px;max-width:1000px;margin:auto;position:relative}
+.btn{border:0;background:var(--b);color:var(--t);padding:12px 24px;border-radius:30px;font:600 1rem Nunito,sans-serif;cursor:pointer;box-shadow:var(--sh);transition:.25s;min-height:44px}
+.btn:hover{transform:translateY(-2px);background:var(--g)}.btn.w{background:var(--w)}
+.card{background:var(--w);border:1px solid var(--s);border-radius:20px;box-shadow:var(--sh);padding:18px}
+.rv{opacity:0;transform:translateY(30px);transition:opacity .9s,transform .9s}.rv.in{opacity:1;transform:none}
+nav{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--s);display:flex;justify-content:center;gap:6px;padding:8px;flex-wrap:wrap}
+nav a{color:var(--t);text-decoration:none;padding:6px 14px;border-radius:20px;position:relative;font-size:.95rem}
+nav a:after{content:"";position:absolute;left:50%;bottom:0;width:0;height:2px;background:var(--b);transition:.3s;transform:translateX(-50%)}
+nav a:hover:after,nav a.on:after{width:60%}nav a.on{background:var(--b)}
+#bg{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.fl{position:absolute;bottom:-40px;animation:up linear forwards;color:var(--w);text-shadow:0 0 6px var(--b)}
+@keyframes up{to{transform:translateY(-110vh) rotate(25deg);opacity:0}}
+.dec{position:absolute;font-size:2rem;color:var(--w);text-shadow:0 2px 8px var(--b);animation:bob 5s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-14px)}}
+main,footer,nav{position:relative;z-index:1}
+#hero{text-align:center;min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.photo{width:min(260px,70vw);aspect-ratio:1;border-radius:50% 50% 46% 46%;border:8px solid var(--w);box-shadow:var(--sh);object-fit:cover;transform:rotate(-3deg)}
+.mas{columns:3 200px;gap:14px}.mas figure{margin:0 0 14px;break-inside:avoid;background:var(--w);padding:8px 8px 12px;border-radius:14px;box-shadow:var(--sh);cursor:pointer;transition:.3s}
+.mas figure:hover{transform:rotate(-1deg) scale(1.02)}.mas img{width:100%;border-radius:10px;display:block}
+figcaption{font-size:.85rem;padding-top:6px}figcaption small{display:block;opacity:.7}
+#lb{position:fixed;inset:0;background:rgba(63,107,134,.8);z-index:90;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.35s;color:var(--w);padding:20px;text-align:center}
+#lb.on{opacity:1;pointer-events:auto}#lb img{max-width:92vw;max-height:72vh;border-radius:16px;transform:scale(.92);transition:.35s}#lb.on img{transform:none}
+.paper{background:var(--w);border-radius:6px 6px 20px 20px;padding:30px;box-shadow:var(--sh);text-align:center;border-top:6px solid var(--b)}
+.lt p{opacity:0;animation:fi .9s forwards;text-align:left;white-space:pre-wrap}@keyframes fi{to{opacity:1}}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.flip{perspective:800px;height:170px;cursor:pointer}.fi{position:relative;width:100%;height:100%;transition:transform .7s;transform-style:preserve-3d}
+.flip.on .fi{transform:rotateY(180deg)}.fi>div{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;box-shadow:var(--sh);border:1px solid var(--s)}
+.fr{background:var(--b);font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600}.bk{background:var(--w);transform:rotateY(180deg);font-size:.95rem}
+.tl{position:relative;padding-left:30px;border-left:3px dashed var(--b);margin-left:10px}.tl .card{margin-bottom:24px;position:relative}
+.tl .card:before{content:"♡";position:absolute;left:-44px;top:14px;background:var(--g);border-radius:50%;width:26px;height:26px;text-align:center;font-size:.9rem;line-height:26px}
+.tl img{width:100%;max-height:220px;object-fit:cover;border-radius:12px;margin-top:8px}.tl small{color:var(--t);opacity:.7}
+.sur{text-align:center}#msg,#hug{min-height:2em;margin-top:16px;font-family:'Cormorant Garamond',serif;font-size:1.4rem}
+.pl a{display:flex;justify-content:space-between;gap:10px;text-decoration:none;color:var(--t);padding:12px 0;border-bottom:1px solid var(--s)}.pl a:hover{background:var(--b)}
+.cal{display:flex;gap:14px;align-items:center}.cal b{background:var(--b);border-radius:14px;min-width:70px;padding:8px;text-align:center;font-size:.85rem}
+footer{text-align:center;padding:40px 20px 60px}#sec{background:none;border:0;color:var(--s);font-size:.9rem;cursor:pointer}
+#ov{position:fixed;inset:0;z-index:100;background:linear-gradient(135deg,var(--b),var(--g));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:20px;transition:opacity 1s}
+#ov.out{opacity:0;pointer-events:none}
+.env{width:200px;height:130px;background:var(--w);border-radius:10px;position:relative;box-shadow:var(--sh);animation:bob 3s infinite}
+.env:before{content:"";position:absolute;left:0;top:0;border:100px solid transparent;border-top:70px solid var(--s);border-bottom:0;transform-origin:top;transition:transform .8s;z-index:3}
+.env.open:before{transform:rotateX(180deg);z-index:0}.env i{position:absolute;inset:14px;background:var(--b);border-radius:6px;font-size:2rem;font-style:normal;display:flex;align-items:center;justify-content:center;transition:.8s .3s}.env.open i{transform:translateY(-70px)}
+#wm{opacity:0;transition:1s;max-width:420px;min-height:90px}#wm.on{opacity:1}
+#tt{position:fixed;bottom:20px;left:50%;transform:translate(-50%,80px);background:var(--g);padding:10px 22px;border-radius:30px;box-shadow:var(--sh);z-index:200;transition:.4s}#tt.on{transform:translate(-50%,0)}
+.m{position:fixed;inset:0;background:rgba(63,107,134,.5);z-index:150;display:none;align-items:center;justify-content:center;padding:20px}.m.on{display:flex}
+input,textarea{width:100%;padding:10px;border:1px solid var(--s);border-radius:12px;font:inherit;color:var(--t);background:var(--w);margin:4px 0 10px}
+.adm{position:fixed;inset:0;background:var(--b);z-index:120;overflow:auto;display:none}.adm.on{display:flex}
+.side{width:210px;background:var(--g);padding:16px;display:flex;flex-direction:column;gap:6px;flex-shrink:0}.side button{text-align:left;background:none;border:0;padding:10px 12px;border-radius:12px;font:600 .95rem Nunito;color:var(--t);cursor:pointer}.side button.on{background:var(--w)}
+.cont{flex:1;padding:20px;max-width:760px}.cont label{font-size:.8rem;font-weight:600}.row{margin-bottom:16px}.row img{width:100px;height:80px;object-fit:cover;border-radius:10px;display:block;margin-bottom:6px}
+.dg{background:var(--s);color:var(--t)}
+@media(max-width:700px){.adm.on{flex-direction:column}.side{width:100%;flex-direction:row;overflow-x:auto}.side button{white-space:nowrap}.tl{padding-left:20px}.tl .card:before{left:-36px}}
+@media(prefers-reduced-motion:reduce){*,*:before{animation:none!important;transition:none!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
+</style></head><body>
+<div id="ov"><h1>Welcome to My Little Corner of Us ♡</h1><p>A little place filled with pieces of us.</p>
+<div class="env" id="env"><i>♡</i></div><button class="btn" id="ob">Open Your Little Surprise</button><div id="wm" class="card"></div></div>
+<div id="bg"></div><div id="lb" onclick="this.classList.remove('on')"><img id="li"><p id="lc"></p></div><div id="tt"></div>
+<div class="m" id="lg"><div class="card" style="max-width:320px;width:100%"><h3>♡</h3><input type="password" id="pw" placeholder="Password"><button class="btn" onclick="login()">Enter</button> <button class="btn w" onclick="lg.classList.remove('on')">Close</button></div></div>
+<div class="adm" id="adm"><div class="side"><h3>Our Corner ♡</h3><div id="tabs" style="display:contents"></div></div><div class="cont" id="ac"></div></div>
+<nav id="nav"><a href="#home">Home</a><a href="#memories">Memories</a><a href="#letter">Letter</a><a href="#reasons">Reasons</a><a href="#timeline">Timeline</a><a href="#surprise">Surprise</a></nav>
+<main id="app"></main>
+<footer>LITTLE CORNER OF US ♡<br><button id="sec" aria-label="♡" onclick="lg.classList.add('on')">♡</button></footer>
+<script>
+const $=id=>document.getElementById(id),K='lcou_v1',esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ph=i=>'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='300' height='${[300,380,260,340,300,400][i%6]}'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='#B8D8EA'/><stop offset='1' stop-color='#C5DFC9'/></linearGradient></defs><rect width='300' height='100%' fill='url(#g)'/><text x='150' y='50%' font-size='44' text-anchor='middle' fill='#fff'>♡</text></svg>`);
+const def={pw:'love',home:{welcome:'Hi, you. I hope this makes you smile. Come in ♡',title:'To My Favorite Person.',text:'I made this little corner of the internet just for you. Every little detail holds something I want you to remember.',tell:'You are the best part of my days, and I hope you never doubt it.',hug:'Sending you the biggest, warmest hug I can ♡',endT:'And this is just a little piece of how much you mean to me.',endS:"No matter how many memories we make, I'll always have a little corner for you."},
+letter:"Hi love,\n\nI'm not great at saying everything out loud, so I wrote it down.\n\nThank you for being patient with me, for laughing at my bad jokes, and for making regular days feel like something to look forward to.\n\nReplace this with your own words.\n\nAlways yours.",
+photos:[['Placeholder: our first picture','2024-01-01'],['Your favorite smile','2024-02-14'],['A random good day','2024-03-10'],['Coffee date','2024-04-20'],['Replace me','2024-05-05'],['Us','2024-06-01']].map(([cap,date])=>({cap,date,img:''})),
+reasons:[['Ordinary days','The way you make ordinary days feel special.'],['Little habits','Your little habits that make me smile.'],['Appreciated','The way you make me feel appreciated.'],['You','Simply being you.']].map(([title,text])=>({title,text})),
+timeline:[['2024-01-01','Our first conversation','I did not know then how much I would look forward to talking to you.'],['2024-02-14','The day we became closer','Write what happened here.'],['2024-06-01','My favorite memory with you','Write your favorite memory here.'],['2024-09-01','Little moments I never want to forget','The small things count the most.'],['2025-01-01','More memories to come','There is so much more I want to do with you.']].map(([date,title,text])=>({date,title,text,img:''})),
+playlist:[{title:'Our Song',artist:'Artist Name',url:'https://music.youtube.com'},{title:'Song You Love',artist:'Artist Name',url:'https://open.spotify.com'}],
+dates:[{date:'2024-01-01',title:'First conversation'},{date:'2024-02-14',title:'The day we got closer'},{date:'2025-01-01',title:'Anniversary'}]};
+let D;try{D=JSON.parse(localStorage.getItem(K))}catch(e){}D=D||structuredClone(def);
+const mo=d=>{const x=new Date(d+'T00:00');return isNaN(x)?d:x.toLocaleDateString('en',{month:'short',day:'numeric',year:'numeric'})};
+function toast(t){tt.textContent=t;tt.classList.add('on');setTimeout(()=>tt.classList.remove('on'),2200)}
+function hearts(n=14){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;for(let i=0;i<n;i++){const h=document.createElement('span');h.className='fl';h.textContent=['♡','♥','✦','✿'][i%4];h.style.cssText=`left:${Math.random()*100}%;font-size:${14+Math.random()*22}px;animation-duration:${5+Math.random()*5}s;animation-delay:${Math.random()*1.5}s`;bg.appendChild(h);setTimeout(()=>h.remove(),11000)}}
+function R(){const H=D.home;app.innerHTML=`
+<section id="home"><div id="hero"><span class="dec" data-p=".3" style="left:8%;top:18%">☁</span><span class="dec" data-p=".5" style="right:10%;top:30%">✦</span><span class="dec" data-p=".2" style="left:14%;bottom:18%">✿</span>
+<img class="photo" src="${D.photos[0]?.img||ph(1)}" alt=""><h1>${esc(H.title)}</h1><p style="max-width:520px">${esc(H.text)}</p><button class="btn" onclick="go('memories')">Explore Our Memories</button></div></section>
+<section id="memories"><h2 class="rv">Our Little Memories</h2><div class="mas">${D.photos.map((p,i)=>`<figure class="rv" onclick="lb(${i})"><img loading="lazy" src="${p.img||ph(i)}" alt="${esc(p.cap)}"><figcaption>${esc(p.cap)}<small>${mo(p.date)}</small></figcaption></figure>`).join('')}</div></section>
+<section id="letter"><h2 class="rv">Something I Want You to Know</h2><div class="paper rv" style="max-width:560px;margin:20px auto"><div style="font-size:3rem">✉</div><div id="lt" class="lt"></div><button class="btn" id="rl" onclick="readL()">Read My Letter</button></div></section>
+<section id="reasons"><h2 class="rv">Little Things I Love About You</h2><div class="grid" style="margin-top:20px">${D.reasons.map(r=>`<div class="flip rv" onclick="this.classList.toggle('on')"><div class="fi"><div class="fr">${esc(r.title)}</div><div class="bk">${esc(r.text)}</div></div></div>`).join('')}</div></section>
+<section id="timeline"><h2 class="rv">Our Special Moments</h2><div class="tl" style="margin-top:24px">${D.timeline.map(t=>`<div class="card rv"><small>${mo(t.date)}</small><h3>${esc(t.title)}</h3><div>${esc(t.text)}</div>${t.img?`<img loading="lazy" src="${t.img}" alt="">`:''}</div>`).join('')}</div></section>
+<section id="surprise" class="sur"><h2 class="rv">Can I Ask You Something?</h2><p class="rv">Do you know how special you are to me?</p><button class="btn" onclick="msg.textContent=D.home.tell;hearts(24)">Tell Me!</button> <button class="btn w" onclick="hug.textContent=D.home.hug;hug.animate([{transform:'scale(.6)',opacity:0},{transform:'scale(1.15)'},{transform:'scale(1)',opacity:1}],{duration:700});hearts(16)">Send a Little Hug ♡</button><div id="msg"></div><div id="hug"></div></section>
+<section id="playlist"><h2 class="rv">Our Playlist</h2><div class="card pl rv" style="margin-top:16px">${D.playlist.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer"><span>♫ <b>${esc(s.title)}</b></span><span>${esc(s.artist)}</span></a>`).join('')||'<p>No songs yet.</p>'}</div></section>
+<section id="dates"><h2 class="rv">Our Little Calendar</h2><div class="grid" style="margin-top:16px">${D.dates.slice().sort((a,b)=>a.date>b.date?1:-1).map(d=>`<div class="card cal rv"><b>${mo(d.date)}</b><span>${esc(d.title)}</span></div>`).join('')}</div></section>
+<section id="end" style="text-align:center"><h2 class="rv">${esc(H.endT)}</h2><p class="rv">${esc(H.endS)}</p><button class="btn" onclick="go('letter')">Read This Again ♡</button></section>`;obs()}
+const go=id=>$(id).scrollIntoView({behavior:'smooth'});
+function lb(i){const p=D.photos[i];li.src=p.img||ph(i);lc.textContent=p.cap+' · '+mo(p.date);$('lb').classList.add('on')}
+function readL(){$('rl').style.display='none';$('lt').innerHTML=D.letter.split('\n').filter(x=>x.trim()).map((l,i)=>`<p style="animation-delay:${i*.9}s">${esc(l)}</p>`).join('')}
+let io,so;function obs(){io&&io.disconnect();io=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&(x.target.classList.add('in'),io.unobserve(x.target))),{threshold:.15});document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+so&&so.disconnect();so=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.hash==='#'+x.target.id))),{rootMargin:'-45% 0px -50% 0px'});document.querySelectorAll('section').forEach(s=>so.observe(s))}
+addEventListener('scroll',()=>{if(!matchMedia('(prefers-reduced-motion:reduce)').matches)document.querySelectorAll('.dec').forEach(d=>d.style.translate='0 '+(scrollY*d.dataset.p*-.2)+'px')},{passive:true});
+$('ob').onclick=()=>{$('env').classList.add('open');$('ob').style.display='none';$('wm').textContent=D.home.welcome;setTimeout(()=>{wm.classList.add('on');hearts(18)},800);setTimeout(()=>{wm.insertAdjacentHTML('beforeend','<br><br><button class="btn" id="en">Come in ♡</button>');$('en').onclick=()=>{$('ov').classList.add('out');setTimeout(()=>$('ov').remove(),1100)}},1800)};
+setInterval(()=>hearts(1),2500);
+/* ---- ADMIN (frontend-only prototype: NOT secure) ---- */
+let ok=false,tab='Overview';
+function login(){if($('pw').value===D.pw){ok=true;lg.classList.remove('on');$('pw').value='';adm.classList.add('on');A()}else toast('Wrong password')}
+function logout(){ok=false;adm.classList.remove('on')}
+function save(){try{localStorage.setItem(K,JSON.stringify(D));toast('Saved ♡')}catch(e){toast('Storage full: use smaller/fewer photos')}R()}
+const SC={Photos:['photos',['cap','date'],1],Reasons:['reasons',['title','text']],Timeline:['timeline',['date','title','text'],1],Playlist:['playlist',['title','artist','url']],'Special Dates':['dates',['date','title']]};
+const HF=[['title','Hero heading'],['text','Hero text'],['welcome','Envelope welcome message'],['tell','"Tell Me!" message'],['hug','Hug message'],['endT','Final heading'],['endS','Final subtitle']];
+const S=(k,i,f,v)=>{D[k][i][f]=v};
+function fin(el,cb){const f=el.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,900/im.width),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.7))};im.src=r.result};r.readAsDataURL(f)}
+function up(el,k,i){fin(el,d=>{D[k][i].img=d;A()})}
+function addP(el){[...el.files].forEach(f=>fin({files:[f]},d=>{D.photos.push({cap:'New memory',date:new Date().toISOString().slice(0,10),img:d});A()}))}
+function add(k){const b={photos:{cap:'',date:'',img:''},reasons:{title:'',text:''},timeline:{date:'',title:'',text:'',img:''},playlist:{title:'',artist:'',url:''},dates:{date:'',title:''}}[k];D[k].push(b);A()}
+function del(k,i){if(confirm('Delete this item?')){D[k].splice(i,1);A()}}
+function A(){const T=['Overview','Homepage','Photos','Love Letter','Reasons','Timeline','Playlist','Special Dates','Settings'];
+$('tabs').innerHTML=T.map(t=>`<button class="${t===tab?'on':''}" onclick="tab='${t}';A()">${t}</button>`).join('')+`<button onclick="save()">💾 Save all</button><button onclick="logout();go('home')">Preview site</button><button onclick="logout()">Log out</button>`;
+let h=`<h2 style="text-align:left">${tab}</h2>`;
+if(tab=='Overview')h+=`<div class="card">Photos: ${D.photos.length} · Reasons: ${D.reasons.length} · Timeline: ${D.timeline.length} · Songs: ${D.playlist.length} · Dates: ${D.dates.length}<br><br><b>Prototype notice:</b> content lives in this browser only (localStorage) and the password check runs in the page, so it is NOT secure and visitors on other devices will not see your edits. See the production notes for the real backend.</div>`;
+else if(tab=='Homepage')h+=HF.map(([f,l])=>`<div class="row card"><label>${l}</label><textarea rows="2" oninput="D.home.${f}=this.value">${esc(D.home[f])}</textarea></div>`).join('');
+else if(tab=='Love Letter')h+=`<div class="card"><textarea rows="14" oninput="D.letter=this.value">${esc(D.letter)}</textarea></div>`;
+else if(tab=='Settings')h+=`<div class="card"><label>New password</label><input id="np" type="password"><button class="btn" onclick="if(np.value.length>3){D.pw=np.value;save()}else toast('Too short')">Change password</button> <button class="btn dg" onclick="if(confirm('Reset all content?')){D=structuredClone(def);save();A()}">Reset content</button></div>`;
+else{const[k,fs,im]=SC[tab];if(k=='photos')h+=`<div class="card row"><label>Upload multiple photos</label><input type="file" accept="image/*" multiple onchange="addP(this)"></div>`;
+h+=D[k].map((x,i)=>`<div class="card row">${im?`<img src="${x.img||ph(i)}" alt=""><input type="file" accept="image/*" onchange="up(this,'${k}',${i})">`:''}${fs.map(f=>`<label>${f}</label>${f=='text'?`<textarea rows=3 oninput="S('${k}',${i},'${f}',this.value)">${esc(x[f])}</textarea>`:`<input ${f=='date'?'type=date':''} value="${esc(x[f])}" oninput="S('${k}',${i},'${f}',this.value)">`}`).join('')}<button class="btn dg" onclick="del('${k}',${i})">Delete</button></div>`).join('')+(k!='photos'?`<button class="btn" onclick="add('${k}')">+ Add</button>`:'')}
+$('ac').innerHTML=h+`<p><button class="btn" onclick="save()">💾 Save all changes</button></p>`}
+R();
+</script></body></html>
